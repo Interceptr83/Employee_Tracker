@@ -12,6 +12,54 @@ require("console.table");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                            //
+//                                           VIEW FUNCTIONS                                                   //
+//                                                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function viewDepartments() {
+    db.findAllDepartments()
+      .then(([rows]) => {
+        let departments = rows;
+        console.log("\n");
+        console.table(departments);
+      })
+      .then(() => loadMainPrompts());
+}
+
+function viewEmployees() {
+    db.findAllEmployees()
+      .then(([rows]) => {
+        let employees = rows;
+        console.log("\n");
+        console.table(employees);
+      })
+      .then(() => loadMainPrompts());
+}
+
+function viewRoles() {
+    db.findAllRoles()
+      .then(([rows]) => {
+        let roles = rows;
+        console.log("\n");
+        console.table(roles);
+      })
+      .then(() => loadMainPrompts());
+  }
+  
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                            //
+//                                           VIEW FUNCTIONS                                                   //
+//                                                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                            //
 //                                           PROMPT MENU                                                      //
 //                                                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
