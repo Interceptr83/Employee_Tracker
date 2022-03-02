@@ -16,6 +16,7 @@ require("console.table");
 //                                                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// VIEW DEPARMTENTS
 
 function viewDepartments() {
     db.findAllDepartments()
@@ -27,6 +28,8 @@ function viewDepartments() {
       .then(() => loadMainPrompts());
 }
 
+// VIEW EMPLOYEES
+
 function viewEmployees() {
     db.findAllEmployees()
       .then(([rows]) => {
@@ -36,6 +39,8 @@ function viewEmployees() {
       })
       .then(() => loadMainPrompts());
 }
+
+// VIEW ROLES
 
 function viewRoles() {
     db.findAllRoles()
@@ -54,6 +59,7 @@ function viewRoles() {
 //                                                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// ADD DEPARTMENT
 
 function addDepartment() {
     prompt([
@@ -69,6 +75,8 @@ function addDepartment() {
           .then(() => loadMainPrompts())
       })
   }
+
+// ADD EMPLOYEE
 
   function addEmployee() {
     prompt([
@@ -138,6 +146,8 @@ function addDepartment() {
       })
   }
 
+  // ADD ROLE
+
   function addRole() {
     db.findAllDepartments()
       .then(([rows]) => {
@@ -168,6 +178,57 @@ function addDepartment() {
               .then(() => console.log(`Added ${role.title} to the database`))
               .then(() => loadMainPrompts())
           })
+      })
+  }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                            //
+//                                           Update Function                                                      //
+//                                                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function updateEmployeeRole() {
+    db.findAllEmployees()
+      .then(([rows]) => {
+        let employees = rows;
+        const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+          name: `${first_name} ${last_name}`,
+          value: id
+        }));
+  
+        prompt([
+          {
+            type: "list",
+            name: "employeeId",
+            message: "Which employee's role do you want to update?",
+            choices: employeeChoices
+          }
+        ])
+          .then(res => {
+            let employeeId = res.employeeId;
+            db.findAllRoles()
+              .then(([rows]) => {
+                let roles = rows;
+                const roleChoices = roles.map(({ id, title }) => ({
+                  name: title,
+                  value: id
+                }));
+  
+                prompt([
+                  {
+                    type: "list",
+                    name: "roleId",
+                    message: "Which role do you want to assign the selected employee?",
+                    choices: roleChoices
+                  }
+                ])
+                  .then(res => db.updateEmployeeRole(employeeId, res.roleId))
+                  .then(() => console.log("Updated employee's role"))
+                  .then(() => loadMainPrompts())
+              });
+          });
       })
   }
 
@@ -252,6 +313,11 @@ function createMenu() {
   }
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                            //
+//                                      START AND STOP APPLICATION                                            //
+//                                                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 function menu() {
@@ -259,5 +325,12 @@ console.log("Welcome to the Employee Manager App");
 createMenu();
 }
 
+function quit() {
+  console.log("Goodbye!");
+  process.exit();
+}
+
 menu();
+
+
 
