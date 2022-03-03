@@ -25,7 +25,7 @@ function viewDepartments() {
         console.log("\n");
         console.table(departments);
       })
-      .then(() => loadMainPrompts());
+      .then(() => createMenu());
 }
 
 // VIEW EMPLOYEES
@@ -37,7 +37,7 @@ function viewEmployees() {
         console.log("\n");
         console.table(employees);
       })
-      .then(() => loadMainPrompts());
+      .then(() => createMenu());
 }
 
 // VIEW ROLES
@@ -49,7 +49,7 @@ function viewRoles() {
         console.log("\n");
         console.table(roles);
       })
-      .then(() => loadMainPrompts());
+      .then(() => createMenu());
   }
   
 
@@ -72,7 +72,7 @@ function addDepartment() {
         let name = res;
         db.createDepartment(name)
           .then(() => console.log(`Added ${name.name} to the database`))
-          .then(() => loadMainPrompts())
+          .then(() => createMenu())
       })
   }
 
@@ -139,7 +139,7 @@ function addDepartment() {
                       .then(() => console.log(
                         `Added ${firstName} ${lastName} to the database`
                       ))
-                      .then(() => loadMainPrompts())
+                      .then(() => createMenu())
                   })
               })
           })
@@ -176,7 +176,7 @@ function addDepartment() {
           .then(role => {
             db.createRole(role)
               .then(() => console.log(`Added ${role.title} to the database`))
-              .then(() => loadMainPrompts())
+              .then(() => createMenu())
           })
       })
   }
@@ -226,7 +226,7 @@ function updateEmployeeRole() {
                 ])
                   .then(res => db.updateEmployeeRole(employeeId, res.roleId))
                   .then(() => console.log("Updated employee's role"))
-                  .then(() => loadMainPrompts())
+                  .then(() => createMenu())
               });
           });
       })
@@ -249,7 +249,7 @@ function createMenu() {
         choices: [
           {
             name: "View All Departments",
-            value: "VIEW_ALL_DEPARTMENTS"
+            value: "VIEW_DEPARTMENTS"
           },
           {
             name: "View All Employees",
@@ -257,7 +257,7 @@ function createMenu() {
           },
           {
             name: "View All Roles",
-            value: "VIEW_ALL_ROLES"
+            value: "VIEW_ROLES"
           },
           {
             name: "Add Employee",
@@ -284,22 +284,22 @@ function createMenu() {
     ]).then(res => {
       let choice = res.choice;
       switch (choice) {
-        case "VIEW_ALL_DEPARTMENTS":
-            viewDepartments();
-            break;
+        case "VIEW_DEPARTMENTS":
+          viewDepartments();
+          break;
         case "VIEW_EMPLOYEES":
           viewEmployees();
           break;
-          case "VIEW_ROLES":
+        case "VIEW_ROLES":
           viewRoles();
           break;
-          case "ADD_DEPARTMENT":
+        case "ADD_DEPARTMENT":
           addDepartment();
           break;
         case "ADD_EMPLOYEE":
           addEmployee();
           break;
-          case "ADD_ROLE":
+        case "ADD_ROLE":
           addRole();
           break;
         case "UPDATE_EMPLOYEE_ROLE":
