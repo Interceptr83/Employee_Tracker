@@ -1,8 +1,7 @@
 # Employee_Tracker
+
   ![scrn_sht](https://user-images.githubusercontent.com/90010873/156522864-f520ee65-0aaa-4e9c-beb6-9b06a426b49c.png)
- 
   GitHub Repository: https://github.com/Interceptr83/Employee_Tracker
-  
   Walkthrough Video: https://youtu.be/72sw8mJYf3w
 
   ## Application Description
